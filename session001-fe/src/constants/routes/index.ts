@@ -2,6 +2,9 @@ export const LOGIN = "/login";
 export const DASHBOARD = "/";
 export const DEFAULT = "/default";
 
+// Tool History
+export const TOOL_HISTORY = "/tool-history";
+
 //
 
 //
