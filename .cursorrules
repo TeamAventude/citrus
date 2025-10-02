@@ -1,0 +1,251 @@
+# Cursor AI Rules and Best Practices
+
+# This file contains rules and best practices for AI assistants working with the Session001 framework template.
+# Reference documentation: Architecture.md, DATABASE.md, Session001.Tests/README.md, AGENTS.md
+
+## Core Architecture Rules
+
+# ALWAYS follow the clean architecture pattern established in Architecture.md
+- Use the Controller-Service-Model 3-layer pattern
+- Implement dependency injection for all services
+- Create interfaces before concrete implementations (IProductService → ProductService)
+- Maintain clear separation between API layer and business logic
+- Follow the established request-response flow: Controller → Service → Data
+
+## Database Rules
+
+# Reference DATABASE.md for complete schema understanding
+- Use Entity Framework Code First approach with migrations
+- Handle database constraints properly in Entity Framework configurations
+- Respect unique constraints (ProductNumber for products)
+- Use async/await for all database operations
+- Configure Entity Framework with proper data annotations:
+  ```csharp
+  [Table("Product", Schema = "Production")]
+  public class Product
+  {
+      [Key]
+      public int ProductID { get; set; }
+      
+      [Required]
+      [StringLength(50)]
+      public string Name { get; set; } = string.Empty;
+  }
+  ```
+
+## Testing Rules (Reference: Session001.Tests/README.md)
+
+# Maintain comprehensive test coverage
+- Write integration tests with real database connections, NO MOCKS
+- Test against actual database with Entity Framework Code First
+- Include both positive and negative test scenarios
+- Use TestDataHelper for creating valid test data that respects database constraints
+- Follow established test patterns:
+  - CRUD operations with Entity Framework
+  - Search and filtering with LINQ queries
+  - Business logic validation and error handling
+
+## Code Generation Rules
+
+# For Controllers:
+- Use [ApiController] and [Route("api/[controller]")] attributes
+- Implement dependency injection for services and logging
+- Include comprehensive error handling with appropriate HTTP status codes
+- Support pagination for list endpoints using PagedResult<T>
+- Use DTOs for all request/response objects
+
+# For Services:
+- Always create interface first (I{EntityName}Service)
+- Implement proper business logic validation
+- Use ApplicationDbContext for data access
+- Include comprehensive error handling and logging
+- Support async operations throughout
+
+# For DTOs:
+- Create separate DTOs for Create, Update, and Read operations
+- Use data annotations for validation
+- Follow existing DTO patterns in Session001.DTOs project
+
+## Project Structure Rules
+
+# Follow the established 6-project structure:
+- Session001.API: Controllers, configuration, middleware
+- Session001.Services: Business logic, interfaces, implementations
+- Session001.Data: DbContext, entity configurations, migrations
+- Session001.DTOs: Data transfer objects, validation attributes
+- Session001.Tests: Integration tests, test helpers, fixtures
+- Session001.Utils: Shared utilities, helper classes
+
+## Naming Conventions
+
+# Follow established .NET conventions:
+- PascalCase for public members, classes, interfaces, methods
+- camelCase for private fields, parameters, local variables
+- Async suffix for async methods
+- Interface names start with 'I'
+- Test method names: MethodName_WithScenario_ReturnsExpectedResult
+
+## Error Handling Rules
+
+# Implement comprehensive error handling:
+- Use try-catch blocks with proper logging
+- Return appropriate HTTP status codes
+- Create user-friendly error messages
+- Log exceptions with correlation IDs
+- Use global exception middleware for unhandled exceptions
+
+## Performance Rules
+
+# Optimize for performance:
+- Use appropriate database indexes
+- Implement pagination for large datasets
+- Use projection (Select) to limit returned columns
+- Optimize Entity Framework queries
+- Implement caching for frequently accessed data
+
+## Security Rules
+
+# Follow security best practices:
+- Validate all input parameters
+- Use parameterized queries (Entity Framework handles this)
+- Sanitize data before database operations
+- Implement proper authentication and authorization
+- Follow principle of least privilege
+
+## Documentation Rules
+
+# Maintain comprehensive documentation:
+- Use XML documentation for all public APIs
+- Update README.md files when adding new features
+- Include code examples in documentation
+- Document configuration options and environment variables
+- Update Architecture.md for architectural changes
+
+## Template-Specific Rules
+
+# BOYK Model Integration:
+- Support OpenAI, Claude, and xAI integrations
+- Follow the established AI/Agent patterns in AGENTS.md
+- Maintain compatibility with .NET template packaging
+- Support template customization parameters
+
+## Quality Assurance Rules
+
+# Code quality standards:
+- No magic numbers - use constants or configuration
+- Implement proper resource disposal
+- Use strongly-typed configurations
+- Follow SOLID principles
+- Implement appropriate design patterns
+
+## Business Logic Rules
+
+# Sample domain knowledge:
+- Understand the business context (Product Management, Manufacturing, Inventory)
+- Respect business rules (unique product numbers, pricing validation)
+- Implement proper workflow validations
+- Handle entity relationships and constraints properly
+
+## Integration Test Patterns
+
+# When adding new tests:
+- Extend CustomWebApplicationFactory for consistent setup
+- Use existing test categories as templates
+- Include database constraint validation
+- Test error scenarios and edge cases
+- Clean up test data properly
+- Use FluentAssertions for readable assertions
+
+## Deployment Rules
+
+# Support enterprise deployment:
+- Configure for Azure SQL Database
+- Support multiple environments (Development, Testing, Production)
+- Include health checks for monitoring
+- Implement proper logging and telemetry
+- Support containerization with Docker
+
+## API Design Rules
+
+# Follow RESTful API principles:
+- Use appropriate HTTP verbs (GET, POST, PUT, DELETE)
+- Implement consistent response patterns
+- Support content negotiation
+- Implement API versioning when needed
+- Use appropriate status codes
+
+## Configuration Rules
+
+# Manage configuration properly:
+- Use appsettings.json for environment-specific settings
+- Configure Entity Framework connection strings properly
+- Implement configuration validation
+- Use strongly-typed configuration classes
+- Support environment variable overrides
+
+## Logging Rules
+
+# Implement structured logging:
+- Use appropriate log levels (Trace, Debug, Information, Warning, Error, Critical)
+- Include correlation IDs for request tracking
+- Log business events and performance metrics
+- Use structured logging with Serilog or built-in providers
+- Avoid logging sensitive information
+
+## Extension Rules
+
+# When extending the framework:
+- Follow established patterns in existing controllers/services
+- Create comprehensive tests for new functionality
+- Update documentation for new features
+- Ensure backward compatibility
+- Follow semantic versioning for template updates
+
+## AI Assistant Specific Rules
+
+# For AI Code Generation:
+- Always reference existing code patterns before generating new code
+- Generate complete implementations including tests
+- Maintain consistency with established architecture
+- Include proper error handling and validation
+- Update relevant documentation files
+- Test generated code against real database constraints
+
+# Quick Reference Commands:
+# dotnet test --verbosity minimal (run all tests)
+# dotnet test --filter "DisplayName~EmployeesController" (run specific tests)
+# dotnet new session001 -n YourProjectName (create new project from template)
+
+## File Reference Priority
+
+# When generating code, reference these files in order:
+1. AGENTS.md - AI-specific development guidelines
+2. Architecture.md - Comprehensive architectural patterns
+3. DATABASE.md - Complete database schema and constraints
+4. Session001.Tests/README.md - Testing patterns and examples
+5. Existing controller/service implementations - Real code patterns
+6. Program.cs - Dependency injection and configuration setup
+7. ApplicationDbContext.cs - Entity Framework configuration examples
+
+## Prohibited Practices
+
+# NEVER do these:
+- Use mocks in integration tests (use real database connections)
+- Ignore database triggers and constraints
+- Generate code without corresponding tests
+- Break established architecture patterns
+- Skip error handling or input validation
+- Create magic numbers or hardcoded values
+- Modify database schema without proper migrations
+- Generate incomplete implementations
+
+## Success Criteria
+
+# Code is considered successful when:
+- All existing tests continue to pass (maintain 100% success rate)
+- New functionality includes comprehensive test coverage
+- Generated code follows established patterns exactly
+- Documentation is updated appropriately
+- No breaking changes to existing functionality
+- Performance considerations are addressed
+- Security best practices are implemented

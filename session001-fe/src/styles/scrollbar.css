@@ -1,0 +1,21 @@
+/* Width of the scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track (background of the scrollbar) */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Handle (draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+  background: #dfe2e9;
+  border-radius: 6px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #cccccc;
+}
