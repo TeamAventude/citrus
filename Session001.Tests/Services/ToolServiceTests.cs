@@ -190,6 +190,42 @@ public class ToolServiceTests : BaseServiceTest
         response.Analytics.RepairHistory.RepairCostPercentage.Should().BeGreaterThan(70m);
     }
 
+
+    [Fact]
+    public async Task GetToolsAsync_ReturnsOrderedResultsAndAppliesSearch()
+    {
+        // Arrange
+        var toolA = CreateTool(history =>
+        {
+            history.Add(CreateEvent("Borrowing", DateTime.UtcNow.AddDays(-10)));
+            history.Add(CreateEvent("Return", DateTime.UtcNow.AddDays(-8)));
+        });
+        toolA.Name = "Angle Grinder";
+        toolA.ToolNumber = "ANG-1001";
+
+        var toolB = CreateTool(history =>
+        {
+            history.Add(CreateEvent("Borrowing", DateTime.UtcNow.AddDays(-5)));
+            history.Add(CreateEvent("Return", DateTime.UtcNow.AddDays(-2)));
+        });
+        toolB.Name = "Bench Press";
+        toolB.ToolNumber = "BNP-2002";
+
+        Context.Tools.AddRange(toolA, toolB);
+        await Context.SaveChangesAsync();
+
+        // Act
+        var allTools = await _toolService.GetToolsAsync();
+        var filteredTools = await _toolService.GetToolsAsync("bench");
+
+        // Assert
+        allTools.Should().HaveCount(2);
+        allTools.Select(t => t.Name).Should().ContainInOrder("Angle Grinder", "Bench Press");
+
+        filteredTools.Should().HaveCount(1);
+        filteredTools.Single().Name.Should().Be("Bench Press");
+    }
+
     private static Tool CreateTool(Action<List<ToolHistory>> historyBuilder)
     {
         var tool = new Tool

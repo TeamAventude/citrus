@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +25,30 @@ namespace Session001.Services.Implementations
         {
             _context = context;
             _logger = logger;
+        }
+
+        public async Task<IReadOnlyList<ToolDto>> GetToolsAsync(string? searchTerm = null)
+        {
+            _logger.LogInformation("Retrieving tools with search term {SearchTerm}", searchTerm);
+
+            var query = _context.Tools
+                .Include(t => t.History)
+                .AsSplitQuery()
+                .AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                var normalized = searchTerm.Trim();
+                query = query.Where(t =>
+                    EF.Functions.Like(t.Name, $"%{normalized}%") ||
+                    EF.Functions.Like(t.ToolNumber, $"%{normalized}%"));
+            }
+
+            var tools = await query
+                .OrderBy(t => t.Name)
+                .ToListAsync();
+
+            return tools.Select(tool => MapToDto(tool, CalculateToolMetrics(tool))).ToList();
         }
 
         public async Task<ToolHistoryResponseDto> GetToolHistoryAsync(int toolId, ToolHistoryFilterDto? filter = null)
@@ -419,3 +443,4 @@ namespace Session001.Services.Implementations
             string UsabilityReason);
     }
 }
+

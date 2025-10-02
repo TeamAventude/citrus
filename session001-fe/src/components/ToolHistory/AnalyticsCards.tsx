@@ -7,7 +7,6 @@ import {
   Wrench,
   DollarSign,
   CheckCircle,
-  XCircle,
   Clock,
   Activity
 } from 'lucide-react';

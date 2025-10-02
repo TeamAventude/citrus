@@ -1,19 +1,19 @@
 import React, { useMemo } from 'react';
-import { 
-  ShoppingCart, 
-  Users, 
-  RotateCcw, 
-  CheckSquare, 
-  Wrench, 
-  DollarSign, 
+import {
+  ShoppingCart,
+  Users,
+  RotateCcw,
+  CheckSquare,
+  Wrench,
+  DollarSign,
   Skull,
   Calendar,
   User,
   FileText,
-  Clock
+  Clock,
 } from 'lucide-react';
-import { ToolHistoryEvent, EventType } from '../../types/toolHistory';
 import moment from 'moment';
+import { ToolHistoryEvent, EventType } from '../../types/toolHistory';
 
 interface ToolTimelineProps {
   events: ToolHistoryEvent[];
@@ -24,162 +24,147 @@ interface ToolTimelineProps {
   };
 }
 
-export const ToolTimeline: React.FC<ToolTimelineProps> = ({ 
-  events, 
-  eventTypeFilter, 
-  dateRange 
-}) => {
-  // Filter events based on filters
-  const filteredEvents = useMemo(() => {
-    let filtered = [...events];
+const EVENT_COLOR_MAP: Record<EventType, string> = {
+  procurement: 'bg-blue-100 text-blue-600 border-blue-200',
+  borrowing: 'bg-green-100 text-green-600 border-green-200',
+  return: 'bg-indigo-100 text-indigo-600 border-indigo-200',
+  qc: 'bg-purple-100 text-purple-600 border-purple-200',
+  repair: 'bg-orange-100 text-orange-600 border-orange-200',
+  billing: 'bg-yellow-100 text-yellow-600 border-yellow-200',
+  eol: 'bg-red-100 text-red-600 border-red-200',
+};
 
-    // Filter by event type
-    if (eventTypeFilter !== 'all') {
-      filtered = filtered.filter(event => event.type === eventTypeFilter);
-    }
+const EVENT_ICON_MAP: Record<EventType, JSX.Element> = {
+  procurement: <ShoppingCart className="w-5 h-5" />,
+  borrowing: <Users className="w-5 h-5" />,
+  return: <RotateCcw className="w-5 h-5" />,
+  qc: <CheckSquare className="w-5 h-5" />,
+  repair: <Wrench className="w-5 h-5" />,
+  billing: <DollarSign className="w-5 h-5" />,
+  eol: <Skull className="w-5 h-5" />,
+};
 
-    // Filter by date range
-    if (dateRange.startDate) {
-      filtered = filtered.filter(event => 
-        new Date(event.date) >= new Date(dateRange.startDate)
-      );
-    }
-    if (dateRange.endDate) {
-      filtered = filtered.filter(event => 
-        new Date(event.date) <= new Date(dateRange.endDate)
-      );
-    }
+const getEventTitle = (eventType: EventType): string => {
+  switch (eventType) {
+    case 'procurement':
+      return 'Procurement';
+    case 'borrowing':
+      return 'Borrowed';
+    case 'return':
+      return 'Returned';
+    case 'qc':
+      return 'Quality Control';
+    case 'repair':
+      return 'Repair';
+    case 'billing':
+      return 'Billing';
+    case 'eol':
+      return 'End of Life';
+    default:
+      return 'Event';
+  }
+};
 
-    // Sort chronologically (newest first for timeline display)
-    return filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  }, [events, eventTypeFilter, dateRange]);
-
-  const getEventIcon = (eventType: EventType) => {
-    const iconClasses = "w-5 h-5";
-    switch (eventType) {
-      case 'procurement':
-        return <ShoppingCart className={iconClasses} />;
-      case 'borrowing':
-        return <Users className={iconClasses} />;
-      case 'return':
-        return <RotateCcw className={iconClasses} />;
-      case 'qc':
-        return <CheckSquare className={iconClasses} />;
-      case 'repair':
-        return <Wrench className={iconClasses} />;
-      case 'billing':
-        return <DollarSign className={iconClasses} />;
-      case 'eol':
-        return <Skull className={iconClasses} />;
-      default:
-        return <FileText className={iconClasses} />;
-    }
-  };
-
-  const getEventColor = (eventType: EventType) => {
-    switch (eventType) {
-      case 'procurement':
-        return 'bg-blue-100 text-blue-600 border-blue-200';
-      case 'borrowing':
-        return 'bg-green-100 text-green-600 border-green-200';
-      case 'return':
-        return 'bg-indigo-100 text-indigo-600 border-indigo-200';
-      case 'qc':
-        return 'bg-purple-100 text-purple-600 border-purple-200';
-      case 'repair':
-        return 'bg-orange-100 text-orange-600 border-orange-200';
-      case 'billing':
-        return 'bg-yellow-100 text-yellow-600 border-yellow-200';
-      case 'eol':
-        return 'bg-red-100 text-red-600 border-red-200';
-      default:
-        return 'bg-gray-100 text-gray-600 border-gray-200';
-    }
-  };
-
-  const getEventTitle = (eventType: EventType) => {
-    switch (eventType) {
-      case 'procurement':
-        return 'Procurement';
-      case 'borrowing':
-        return 'Borrowed';
-      case 'return':
-        return 'Returned';
-      case 'qc':
-        return 'Quality Control';
-      case 'repair':
-        return 'Repair';
-      case 'billing':
-        return 'Billing';
-      case 'eol':
-        return 'End of Life';
-      default:
-        return 'Event';
-    }
-  };
-
-  const formatEventDetails = (event: ToolHistoryEvent) => {
-    const details = [];
-    const { type, details: eventDetails } = event;
-
-    switch (type) {
-      case 'procurement':
-        if (eventDetails.poNumber) details.push(`PO: ${eventDetails.poNumber}`);
-        if (eventDetails.supplier) details.push(`Supplier: ${eventDetails.supplier}`);
-        if (eventDetails.procurementPrice) details.push(`Price: $${eventDetails.procurementPrice.toFixed(2)}`);
-        break;
-      
-      case 'borrowing':
-        if (eventDetails.borrower) details.push(`Borrower: ${eventDetails.borrower}`);
-        if (eventDetails.project) details.push(`Project: ${eventDetails.project}`);
-        break;
-      
-      case 'return':
-        if (eventDetails.returnCondition) details.push(`Condition: ${eventDetails.returnCondition}`);
-        if (eventDetails.project) details.push(`Project: ${eventDetails.project}`);
-        if (eventDetails.overdueBy && eventDetails.overdueBy > 0) {
-          details.push(`Overdue by: ${eventDetails.overdueBy} days`);
-        }
-        break;
-      
-      case 'qc':
-        if (eventDetails.qcResult) details.push(`Result: ${eventDetails.qcResult}`);
-        if (eventDetails.status) details.push(`Status: ${eventDetails.status}`);
-        break;
-      
-      case 'repair':
-        if (eventDetails.repairNote) details.push(`Note: ${eventDetails.repairNote}`);
-        if (eventDetails.cost) details.push(`Cost: $${eventDetails.cost.toFixed(2)}`);
-        if (eventDetails.status) details.push(`Status: ${eventDetails.status}`);
-        break;
-      
-      case 'billing':
-        if (eventDetails.billingAmount) details.push(`Amount: $${eventDetails.billingAmount.toFixed(2)}`);
-        if (eventDetails.project) details.push(`Project: ${eventDetails.project}`);
-        break;
-      
-      case 'eol':
-        if (eventDetails.eolReason) details.push(`Reason: ${eventDetails.eolReason}`);
-        if (eventDetails.status) details.push(`Status: ${eventDetails.status}`);
-        break;
-    }
-
-    return details;
-  };
-
-  const getStatusIndicator = (event: ToolHistoryEvent) => {
-    if (event.details.status) {
-      const status = event.details.status;
-      if (status === 'Pass') {
-        return <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Pass</span>;
-      } else if (status === 'Fail') {
-        return <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Fail</span>;
-      } else if (status === 'Pending') {
-        return <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Pending</span>;
-      }
-    }
+const renderStatus = (status?: string | null): JSX.Element | null => {
+  if (!status) {
     return null;
-  };
+  }
+
+  const normalized = status.toLowerCase();
+
+  if (normalized === 'pass') {
+    return (
+      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+        Pass
+      </span>
+    );
+  }
+
+  if (normalized === 'fail') {
+    return (
+      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+        Fail
+      </span>
+    );
+  }
+
+  if (normalized === 'pending') {
+    return (
+      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+        Pending
+      </span>
+    );
+  }
+
+  return null;
+};
+
+const formatEventDetails = (event: ToolHistoryEvent): string[] => {
+  const details: string[] = [];
+  const { type, details: data } = event;
+
+  switch (type) {
+    case 'procurement':
+      if (data.poNumber) details.push(`PO: ${data.poNumber}`);
+      if (data.supplier) details.push(`Supplier: ${data.supplier}`);
+      if (data.procurementPrice != null) details.push(`Price: $${data.procurementPrice.toFixed(2)}`);
+      if (data.notes) details.push(data.notes);
+      break;
+    case 'borrowing':
+      if (data.borrower) details.push(`Borrower: ${data.borrower}`);
+      if (data.project) details.push(`Project: ${data.project}`);
+      if (data.dueDate) details.push(`Due: ${moment(data.dueDate).format('MMM DD, YYYY')}`);
+      break;
+    case 'return':
+      if (data.returnCondition) details.push(`Condition: ${data.returnCondition}`);
+      if (data.project) details.push(`Project: ${data.project}`);
+      if (data.dueDate) details.push(`Due: ${moment(data.dueDate).format('MMM DD, YYYY')}`);
+      if (data.overdueBy && data.overdueBy > 0) details.push(`Overdue by: ${data.overdueBy} days`);
+      break;
+    case 'qc':
+      if (data.qcResult) details.push(`Result: ${data.qcResult}`);
+      if (data.notes) details.push(data.notes);
+      break;
+    case 'repair':
+      if (data.repairNote) details.push(`Note: ${data.repairNote}`);
+      if (data.cost != null) details.push(`Cost: $${data.cost.toFixed(2)}`);
+      if (data.notes) details.push(data.notes);
+      break;
+    case 'billing':
+      if (data.billingAmount != null) details.push(`Amount: $${data.billingAmount.toFixed(2)}`);
+      if (data.project) details.push(`Project: ${data.project}`);
+      break;
+    case 'eol':
+      if (data.eolReason) details.push(`Reason: ${data.eolReason}`);
+      if (data.notes) details.push(data.notes);
+      break;
+    default:
+      if (data.notes) details.push(data.notes);
+  }
+
+  return details;
+};
+
+export const ToolTimeline: React.FC<ToolTimelineProps> = ({ events, eventTypeFilter, dateRange }) => {
+  const filteredEvents = useMemo(() => {
+    const matchesType = (event: ToolHistoryEvent) =>
+      eventTypeFilter === 'all' || event.type === eventTypeFilter;
+
+    const matchesDate = (event: ToolHistoryEvent) => {
+      const eventDate = new Date(event.date);
+      if (dateRange.startDate && eventDate < new Date(dateRange.startDate)) {
+        return false;
+      }
+      if (dateRange.endDate && eventDate > new Date(dateRange.endDate)) {
+        return false;
+      }
+      return true;
+    };
+
+    return [...events]
+      .filter((event) => matchesType(event) && matchesDate(event))
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }, [events, eventTypeFilter, dateRange]);
 
   if (filteredEvents.length === 0) {
     return (
@@ -188,9 +173,8 @@ export const ToolTimeline: React.FC<ToolTimelineProps> = ({
         <h3 className="text-lg font-medium text-gray-900 mb-2">No Events Found</h3>
         <p className="text-gray-600">
           {eventTypeFilter !== 'all' || dateRange.startDate || dateRange.endDate
-            ? 'No events match the current filters. Try adjusting your filter criteria.'
-            : 'No history events found for this tool.'
-          }
+            ? 'No events match the selected filters. Try adjusting your criteria.'
+            : 'There are no recorded events for this tool yet.'}
         </p>
       </div>
     );
@@ -198,43 +182,34 @@ export const ToolTimeline: React.FC<ToolTimelineProps> = ({
 
   return (
     <div className="bg-white rounded-lg shadow-sm border">
-      {/* Header */}
       <div className="p-6 border-b border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900">Event Timeline</h3>
         <p className="text-sm text-gray-600 mt-1">
-          {filteredEvents.length} event{filteredEvents.length !== 1 ? 's' : ''} 
+          {filteredEvents.length} event{filteredEvents.length !== 1 ? 's' : ''}
           {eventTypeFilter !== 'all' && ` (${getEventTitle(eventTypeFilter)} only)`}
         </p>
       </div>
 
-      {/* Timeline */}
       <div className="p-6">
         <div className="space-y-6">
           {filteredEvents.map((event, index) => (
             <div key={event.id} className="relative flex gap-4">
-              {/* Timeline Line */}
               {index < filteredEvents.length - 1 && (
                 <div className="absolute left-6 top-12 w-0.5 h-full bg-gray-200"></div>
               )}
 
-              {/* Event Icon */}
-              <div className={`flex-shrink-0 w-12 h-12 rounded-full border-2 flex items-center justify-center ${getEventColor(event.type)}`}>
-                {getEventIcon(event.type)}
+              <div className={`flex-shrink-0 w-12 h-12 rounded-full border-2 flex items-center justify-center ${EVENT_COLOR_MAP[event.type]}`}>
+                {EVENT_ICON_MAP[event.type]}
               </div>
 
-              {/* Event Content */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    {/* Event Header */}
                     <div className="flex items-center gap-3 mb-2">
-                      <h4 className="text-lg font-medium text-gray-900">
-                        {getEventTitle(event.type)}
-                      </h4>
-                      {getStatusIndicator(event)}
+                      <h4 className="text-lg font-medium text-gray-900">{getEventTitle(event.type)}</h4>
+                      {renderStatus(event.details.status)}
                     </div>
 
-                    {/* Event Meta */}
                     <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
                       <div className="flex items-center gap-1">
                         <Calendar className="w-4 h-4" />
@@ -250,7 +225,6 @@ export const ToolTimeline: React.FC<ToolTimelineProps> = ({
                       </div>
                     </div>
 
-                    {/* Event Details */}
                     <div className="space-y-1">
                       {formatEventDetails(event).map((detail, detailIndex) => (
                         <div key={detailIndex} className="text-sm text-gray-700 flex items-start gap-2">
@@ -260,15 +234,13 @@ export const ToolTimeline: React.FC<ToolTimelineProps> = ({
                       ))}
                     </div>
 
-                    {/* Special Indicators */}
-                    {event.details.overdueBy && event.details.overdueBy > 0 && (
+                    {(event.details.isOverdue || (event.details.overdueBy ?? 0) > 0) && (
                       <div className="mt-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                        ⚠️ Overdue Return
+                        ⚠ Overdue Return
                       </div>
                     )}
                   </div>
 
-                  {/* Relative Time */}
                   <div className="text-xs text-gray-500">
                     {moment(event.date).fromNow()}
                   </div>
@@ -278,7 +250,6 @@ export const ToolTimeline: React.FC<ToolTimelineProps> = ({
           ))}
         </div>
 
-        {/* Timeline End Marker */}
         <div className="flex items-center gap-4 mt-6 pt-6 border-t border-gray-200">
           <div className="w-3 h-3 rounded-full bg-gray-300"></div>
           <span className="text-sm text-gray-500">Timeline complete</span>
