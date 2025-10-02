@@ -7,6 +7,7 @@ import {
   FileText,
   Settings,
   LogOut,
+  Wrench,
 } from "lucide-react";
 
 export const SideBar = () => {
@@ -15,6 +16,7 @@ export const SideBar = () => {
 
   const navItems = [
     { icon: GitFork, label: "Complex Agents", href: "/complex-agents" },
+    { icon: Wrench, label: "Tool History", href: "/tool-history" },
     { icon: Rocket, label: "Deployments", href: "#" },
     { icon: BarChart2, label: "Analytics & Cost", href: "#" },
     { icon: CheckSquare, label: "Compliance", href: "#" },
@@ -25,6 +27,9 @@ export const SideBar = () => {
   const isActive = (href: string) => {
     if (href === "/complex-agents") {
       return pathname === "/complex-agents";
+    }
+    if (href === "/tool-history") {
+      return pathname === "/tool-history";
     }
     if (href === "#") return false;
     return pathname.startsWith(href);
