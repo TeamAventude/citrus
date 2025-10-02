@@ -104,3 +104,29 @@ When we develop front end user story we will specify the API Base URL.
     
     - Use AI to summarize changes, write PR descriptions, and checklist items.
 
+### Database connection strings
+
+Server=uom-wo01.database.windows.net;Initial Catalog=binarybeasts;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+Server=uom-wo01.database.windows.net;Initial Catalog=bytebuilders;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+Server=uom-wo01.database.windows.net;Initial Catalog=codecrusaders;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+Server=uom-wo01.database.windows.net;Initial Catalog=debugdragons;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+Server=uom-wo01.database.windows.net;Initial Catalog=hackheroes;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+Server=uom-wo01.database.windows.net;Initial Catalog=logiclegends;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+Server=uom-wo01.database.windows.net;Initial Catalog=pixelpoineers;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+Server=uom-wo01.database.windows.net;Initial Catalog=stackoverflow;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+Server=uom-wo01.database.windows.net;Initial Catalog=syntaxsquad;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+Server=uom-wo01.database.windows.net;Initial Catalog=uom-wo01;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+Server=uom-wo01.database.windows.net;Initial Catalog=vibevampires;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+    
+
