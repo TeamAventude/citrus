@@ -129,5 +129,9 @@ When we develop front end user story we will specify the API Base URL.
 11. Server=uom-wo01.database.windows.net;Initial Catalog=vibevampires;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
 
+### API Key 
+
+sk-proj-M1I2QWo7PzR1e2g3Syw3byJRfdQVG_9h1CHEPkU_rV29Ls_Xlm0YuFkRHmThHO0jKGaUhiqH22T3BlbkFJ9PKb3tuObFMWP1AMhstvf2nwsLE7LHm57S-irXdsrj_KLJRhOQuWJFtU_t3Oj_e_uuFVm
+
     
 
