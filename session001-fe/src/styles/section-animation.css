@@ -1,0 +1,11 @@
+.sectionDown {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 100;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.sectionDown.open {
+  max-height: 1000px;
+  opacity: 1;
+}

@@ -1,0 +1,42 @@
+.p-datatable-thead {
+  background-color: #34a6f2;
+  color: #0369a1;
+  font-weight: 800;
+  font-size: 11px;
+  border-radius: 6px;
+}
+
+.p-datatable-tbody > tr:nth-child(even) {
+  background-color: #faf5ff;
+}
+
+.p-datatable thead th {
+  background-color: #faf5ff;
+  color: #333;
+  font-weight: 600;
+  font-size: 11px;
+  border-bottom: 1px solid #c084fc;
+  padding: 8px 16px;
+}
+
+.p-datatable td {
+  padding: 8px 16px;
+  font-size: 11px;
+  color: #333;
+}
+
+.p-datatable-tbody > tr {
+  border-bottom: none;
+}
+
+.action-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #555;
+}
+
+.action-button:hover {
+  color: #000;
+}
