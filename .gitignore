@@ -1,0 +1,33 @@
+# IDE settings
+.vs/
+.idea/
+*.user
+*.suo
+
+# Build outputs
+bin/
+obj/
+**/bin/
+**/obj/
+TestResults/
+**/TestResults/
+
+# Packages
+packages/
+*.nupkg
+
+# Environment files
+.env
+.env.*
+
+# Logs
+*.log
+
+# Node projects
+node_modules/
+session001-fe/node_modules/
+session001-fe/.env
+session001-fe/.env.*
+
+# Misc
+*.swp
