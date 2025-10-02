@@ -111,32 +111,37 @@ public class Category
     [StringLength(50)]
     public string Name { get; set; } = string.Empty;
     
-    public DateTime ModifiedDate { get; set; }
-}
-```
 
-2. **Add DbSet** to ApplicationDbContext:
-```csharp
-public DbSet<Category> Categories { get; set; }
-```
+    - Generate README/API docs from code & OpenAPI.
+        
+6. **Commit hygiene & PR reviews**
+    
+    - Use AI to summarize changes, write PR descriptions, and checklist items.
 
-3. **Configure entity** in OnModelCreating:
-```csharp
-modelBuilder.Entity<Category>(entity =>
-{
-    entity.HasKey(e => e.CategoryID);
-    entity.Property(e => e.ModifiedDate).HasDefaultValueSql("GETDATE()");
-    entity.HasIndex(e => e.Name);
-});
-```
+### Database connection strings
 
-4. **Create and apply migration**:
-```bash
-dotnet ef migrations add AddCategory --project YourProjectName.Data --startup-project YourProjectName.API
-dotnet ef database update --project YourProjectName.Data --startup-project YourProjectName.API
-```
+1. Server=uom-wo01.database.windows.net;Initial Catalog=binarybeasts;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-## 🧪 Testing
+2. Server=uom-wo01.database.windows.net;Initial Catalog=bytebuilders;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+3. Server=uom-wo01.database.windows.net;Initial Catalog=codecrusaders;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+4. Server=uom-wo01.database.windows.net;Initial Catalog=debugdragons;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+5. Server=uom-wo01.database.windows.net;Initial Catalog=hackheroes;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+6. Server=uom-wo01.database.windows.net;Initial Catalog=logiclegends;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+7. Server=uom-wo01.database.windows.net;Initial Catalog=pixelpoineers;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+8. Server=uom-wo01.database.windows.net;Initial Catalog=stackoverflow;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+9. Server=uom-wo01.database.windows.net;Initial Catalog=syntaxsquad;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+10. Server=uom-wo01.database.windows.net;Initial Catalog=uom-wo01;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
+11. Server=uom-wo01.database.windows.net;Initial Catalog=vibevampires;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
 
 The template includes comprehensive integration tests with Entity Framework Code First.
 
