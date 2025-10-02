@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Wrench, ArrowRight, BarChart3, AlertTriangle } from "lucide-react";
 import * as d3 from "d3";
 
 type Pet = {
@@ -308,6 +310,64 @@ export default function Dashboard() {
             </div>
           </div>
         ))}
+      </section>
+
+      {/* Tool History Quick Access Section */}
+      <section className="mb-12">
+        <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg shadow-lg p-6 text-white">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-white bg-opacity-20 rounded-lg">
+                <Wrench className="w-8 h-8" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold">Tool History Dashboard</h2>
+                <p className="text-blue-100 mt-1">
+                  Track complete tool lifecycle from procurement to end-of-life
+                </p>
+              </div>
+            </div>
+            <Link 
+              to="/tool-history"
+              className="flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
+            >
+              Open Dashboard
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+            <div className="bg-white bg-opacity-20 rounded-lg p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <BarChart3 className="w-5 h-5" />
+                <span className="font-semibold">Analytics</span>
+              </div>
+              <p className="text-sm text-blue-100">
+                Borrowing patterns, repair costs, and usage analytics
+              </p>
+            </div>
+            
+            <div className="bg-white bg-opacity-20 rounded-lg p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <AlertTriangle className="w-5 h-5" />
+                <span className="font-semibold">Usability Assessment</span>
+              </div>
+              <p className="text-sm text-blue-100">
+                Automatic tool status determination based on repair history
+              </p>
+            </div>
+            
+            <div className="bg-white bg-opacity-20 rounded-lg p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Wrench className="w-5 h-5" />
+                <span className="font-semibold">Complete Timeline</span>
+              </div>
+              <p className="text-sm text-blue-100">
+                Full event history with filtering and export capabilities
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Chart section with refined styling */}
