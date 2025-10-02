@@ -106,27 +106,28 @@ When we develop front end user story we will specify the API Base URL.
 
 ### Database connection strings
 
-Server=uom-wo01.database.windows.net;Initial Catalog=binarybeasts;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+1. Server=uom-wo01.database.windows.net;Initial Catalog=binarybeasts;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-Server=uom-wo01.database.windows.net;Initial Catalog=bytebuilders;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+2. Server=uom-wo01.database.windows.net;Initial Catalog=bytebuilders;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-Server=uom-wo01.database.windows.net;Initial Catalog=codecrusaders;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+3. Server=uom-wo01.database.windows.net;Initial Catalog=codecrusaders;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-Server=uom-wo01.database.windows.net;Initial Catalog=debugdragons;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+4. Server=uom-wo01.database.windows.net;Initial Catalog=debugdragons;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-Server=uom-wo01.database.windows.net;Initial Catalog=hackheroes;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+5. Server=uom-wo01.database.windows.net;Initial Catalog=hackheroes;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-Server=uom-wo01.database.windows.net;Initial Catalog=logiclegends;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+6. Server=uom-wo01.database.windows.net;Initial Catalog=logiclegends;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-Server=uom-wo01.database.windows.net;Initial Catalog=pixelpoineers;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+7. Server=uom-wo01.database.windows.net;Initial Catalog=pixelpoineers;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-Server=uom-wo01.database.windows.net;Initial Catalog=stackoverflow;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+8. Server=uom-wo01.database.windows.net;Initial Catalog=stackoverflow;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-Server=uom-wo01.database.windows.net;Initial Catalog=syntaxsquad;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+9. Server=uom-wo01.database.windows.net;Initial Catalog=syntaxsquad;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-Server=uom-wo01.database.windows.net;Initial Catalog=uom-wo01;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+10. Server=uom-wo01.database.windows.net;Initial Catalog=uom-wo01;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-Server=uom-wo01.database.windows.net;Initial Catalog=vibevampires;Persist Security Info=True;User ID=<username>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+11. Server=uom-wo01.database.windows.net;Initial Catalog=vibevampires;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+
 
     
 
