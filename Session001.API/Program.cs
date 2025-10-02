@@ -15,6 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Register application services
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IToolService, ToolService>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
