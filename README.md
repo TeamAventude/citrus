@@ -1,103 +1,117 @@
-# AIFSD Workshop 
+# Aventude Session001 Application
 
-This hands-on builds a **real-world enterprise app** and shows how **AI-First Software Development (AIFSD)** fits into each stage. 
+Agent driven service architecture template with Entity Framework Code First and BOYK model. (Supports Open AI, Claude and xAI)
 
-Verify versions (run in a terminal/PowerShell)
+## 🚀 Quick Start
 
-```
-dotnet --list-sdks        # confirm 9.x is listed
-dotnet --info
-node -v                   # LTS recommended
-npm -v
-code --version            # VS Code
-```
+### Prerequisites
+- .NET 9.0 SDK
+- SQL Server or SQL Server LocalDB
+- Visual Studio 2022 or VS Code with C# extension
 
-## What We’ll Build (at a glance)
+### Install the template:
+```bash
+# From NuGet.org (recommended)
+dotnet new install Aventude.Templates.Session001
 
-- **Back end:** ASP.NET Core 9 API scaffold (Aventude Citrus65 template)
-    
-- **Front end:** React client scaffold (Aventude Citrus65 client)
-    
-- **AIFSD touchpoints:** AI-assisted user stories → API design → code scaffolding → tests → docs → PRs
-
-
-## Create the Project Scaffolds
-
-> Choose a working folder (e.g., `C:\AIFSD\session001` or `~/aifsd/session001`).
-
-### Back end
-
-**Install the template (one-time):**
-
-`dotnet new install Aventude.Templates.Citrus65`
-
-**Option A – Visual Studio (Windows):**
-
-1. **File → New → Project**
-    
-2. Search for **“Citrus”** → select the **Citrus65** template.
-    
-3. Name it: `Session001` → Create.
-    
-
-**Option B – CLI (any OS):**
-
-`dotnet new citrus65 -n "Session001"`
-
-**Run the API (from the API project folder):**
-
-`dotnet restore dotnet build dotnet watch run`
-
-- Note the console output for the **HTTP/HTTPS URLs** (e.g., http://localhost:5074/).
-    
-- Test quickly in a browser or with curl/Postman.
-    
-
-### Front end
-
-From your workspace (parallel to the API folder or inside it—your choice):
-
-```
-npm create aventude-citrus65client@latest session001-fe 
-
-cd session001-fe 
-
-npm install   # if the create step didn’t auto-install`
-
-**Run the client:**
-
-`npm start   # common for Vite setups # or npm start     # common for CRA`
-
+# From local package
+dotnet new install Aventude.Templates.Session001.1.0.1.nupkg
 ```
 
-> If unsure, open `package.json` and use whichever script exists.
+### Create and setup a new project:
+```bash
+# 1. Create new project
+dotnet new session001 -n "YourProjectName"
+cd YourProjectName
 
+# 2. Restore packages
+dotnet restore
 
-### Connect Front end ↔ Back end
+# 3. Set up the database
+dotnet ef database update --project YourProjectName.Data --startup-project YourProjectName.API
 
-When we develop front end user story we will specify the API Base URL.
+# 4. Run the application
+dotnet run --project YourProjectName.API
 
+# 5. Open API documentation at https://localhost:5001/swagger
+```
 
-## AIFSD Workflow During the Lab
+## 📦 What's Included
 
-1. **Problem framing & user stories**
+- **API Layer**: ASP.NET Core Web API with controllers
+- **Services Layer**: Business logic and service implementations  
+- **Data Layer**: Entity Framework context and data access
+- **DTOs**: Data Transfer Objects for clean API contracts
+- **Tests**: Integration and unit tests with xUnit
+- **Utils**: Shared utilities and common functionality
+
+## 🏗️ Project Structure
+
+```
+YourProject/
+├── YourProject.API/          # Web API controllers and configuration
+├── YourProject.Services/     # Business logic layer
+├── YourProject.Data/         # Data access layer
+├── YourProject.DTOs/         # Data transfer objects
+├── YourProject.Tests/        # Test projects
+└── YourProject.Utils/        # Shared utilities
+```
+
+## 🛠️ Development
+
+The template includes:
+- ✅ Clean Architecture structure
+- ✅ Entity Framework Code First with migrations
+- ✅ Dependency Injection setup
+- ✅ Sample Product entity with complete CRUD operations
+- ✅ Integration testing framework
+- ✅ API documentation ready
+
+## 🗃️ Database
+
+The template uses **Entity Framework Code First** approach:
+- Sample `Product` entity with comprehensive business logic patterns
+- Initial migration included and ready to apply
+- Configurable connection strings for different environments
+- Proper indexing and constraint configurations
+
+### Database Configuration
+
+The template includes connection strings for different environments:
+
+**Development** (`appsettings.Development.json`):
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=YourProjectNameDevDb;Trusted_Connection=true;MultipleActiveResultSets=true"
+  }
+}
+```
+
+**Production** (`appsettings.json`):
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=YourProjectNameDb;Trusted_Connection=true;MultipleActiveResultSets=true"
+  }
+}
+```
+
+### Adding New Entities
+
+1. **Create entity class** in `YourProjectName.Data/Entities/`:
+```csharp
+[Table("Category", Schema = "Production")]
+public class Category
+{
+    [Key]
+    public int CategoryID { get; set; }
     
-    - Use AI to draft/clarify user stories and acceptance criteria.
-        
-2. **API design (contract-first)**
+    [Required]
+    [StringLength(50)]
+    public string Name { get; set; } = string.Empty;
     
-    - Prompt AI to propose endpoints & data contracts → review & refine.
-        
-3. **Code scaffolding**
-    
-    - Generate controllers/handlers/models/tests from the contract.
-        
-4. **Tests first**
-    
-    - Use AI to draft unit/integration test skeletons.
-        
-5. **Docs & developer experience**
-    
+
     - Generate README/API docs from code & OpenAPI.
         
 6. **Commit hygiene & PR reviews**
@@ -106,29 +120,98 @@ When we develop front end user story we will specify the API Base URL.
 
 ### Database connection strings
 
-1. Server=uom-wo01.database.windows.net;Initial Catalog=binarybeasts;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+1. Server=uom-wo01.database.windows.net;Initial Catalog=binarybeasts;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-2. Server=uom-wo01.database.windows.net;Initial Catalog=bytebuilders;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+2. Server=uom-wo01.database.windows.net;Initial Catalog=bytebuilders;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-3. Server=uom-wo01.database.windows.net;Initial Catalog=codecrusaders;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+3. Server=uom-wo01.database.windows.net;Initial Catalog=codecrusaders;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-4. Server=uom-wo01.database.windows.net;Initial Catalog=debugdragons;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+4. Server=uom-wo01.database.windows.net;Initial Catalog=debugdragons;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-5. Server=uom-wo01.database.windows.net;Initial Catalog=hackheroes;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+5. Server=uom-wo01.database.windows.net;Initial Catalog=hackheroes;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-6. Server=uom-wo01.database.windows.net;Initial Catalog=logiclegends;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+6. Server=uom-wo01.database.windows.net;Initial Catalog=logiclegends;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-7. Server=uom-wo01.database.windows.net;Initial Catalog=pixelpoineers;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+7. Server=uom-wo01.database.windows.net;Initial Catalog=pixelpoineers;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-8. Server=uom-wo01.database.windows.net;Initial Catalog=stackoverflow;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+8. Server=uom-wo01.database.windows.net;Initial Catalog=stackoverflow;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-9. Server=uom-wo01.database.windows.net;Initial Catalog=syntaxsquad;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+9. Server=uom-wo01.database.windows.net;Initial Catalog=syntaxsquad;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-10. Server=uom-wo01.database.windows.net;Initial Catalog=uom-wo01;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+10. Server=uom-wo01.database.windows.net;Initial Catalog=uom-wo01;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
-11. Server=uom-wo01.database.windows.net;Initial Catalog=vibevampires;Persist Security Info=True;User ID=dbadmin;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
+11. Server=uom-wo01.database.windows.net;Initial Catalog=vibevampires;Persist Security Info=True;User ID=dbadmin;Password=Iz9z%l@p2t&gJMP7Z.r;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Command Timeout=180
 
 
-### API Key 
+The template includes comprehensive integration tests with Entity Framework Code First.
 
-sk-proj-M1I2QWo7PzR1e2g3Syw3byJRfdQVG_9h1CHEPkU_rV29Ls_Xlm0YuFkRHmThHO0jKGaUhiqH22T3BlbkFJ9PKb3tuObFMWP1AMhstvf2nwsLE7LHm57S-irXdsrj_KLJRhOQuWJFtU_t3Oj_e_uuFVm
+### Running Tests
+```bash
+# Run all tests
+dotnet test
+
+# Run specific test project
+dotnet test YourProjectName.Tests
+
+# Run tests with detailed output
+dotnet test --verbosity normal
+```
+
+### Test Features
+- Integration tests with real Entity Framework database connections
+- Test data helpers for creating valid test entities
+- Comprehensive controller testing
+- Business logic validation testing
+
+## 📚 API Documentation
+
+The template includes Swagger/OpenAPI documentation:
+- **Development**: Navigate to `/swagger` when running locally
+- **API Explorer**: Built-in API testing interface
+- **Schema Documentation**: Automatic DTO and validation documentation
+
+## 🛠️ Development Workflow
+
+### Recommended Process
+1. **Design Entity**: Create entity classes with proper annotations
+2. **Configure DbContext**: Add configuration in ApplicationDbContext
+3. **Create Migration**: Generate migration for schema changes
+4. **Create DTOs**: Define request/response objects
+5. **Implement Service**: Add business logic in service layer
+6. **Create Controller**: Implement API endpoints
+7. **Write Tests**: Add comprehensive integration tests
+8. **Update Documentation**: Keep documentation current
+
+### Best Practices
+- **Migration Naming**: Use descriptive migration names
+- **Entity Validation**: Use data annotations and business validation
+- **Service Layer**: Keep controllers thin, business logic in services
+- **Testing**: Write tests for all new functionality
+- **Documentation**: Update API documentation for new endpoints
+
+## 🔧 Troubleshooting
+
+### Common Issues
+- **Migration fails**: Ensure SQL Server LocalDB is installed and running
+- **Database not created**: Run `dotnet ef database update` to apply migrations
+- **Build errors after adding entity**: Ensure proper references and using statements
+- **Tests fail**: Check test connection strings and database accessibility
+
+### Getting Help
+- Check `Architecture.md` for architectural guidance
+- Review `DATABASE.md` for Entity Framework patterns
+- See `AGENTS.md` for AI/Agent development guidelines
+- Examine existing `Product` entity as reference implementation
+
+## 🚀 Next Steps
+
+1. **Customize Entities**: Modify or add entities based on your business needs
+2. **Add Authentication**: Implement authentication and authorization
+3. **Add Logging**: Configure structured logging with Serilog
+4. **Add Caching**: Implement caching for performance optimization
+5. **Add Validation**: Implement comprehensive business validation
+6. **Deploy**: Configure deployment to your preferred platform
+
+## 📝 License
+
+Created by Aventude - Feel free to use and modify!
