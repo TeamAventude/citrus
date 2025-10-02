@@ -1,18 +1,6 @@
 import React from 'react';
 import { Tool, ToolHistory, BorrowingAnalytics, RepairAnalytics, UsabilityDecision } from '../../types/toolHistory';
 import moment from 'moment';
-import { 
-  CheckCircle, 
-  AlertTriangle, 
-  ShoppingCart, 
-  Users, 
-  RotateCcw, 
-  CheckSquare, 
-  Wrench, 
-  DollarSign, 
-  Skull 
-} from 'lucide-react';
-
 interface PDFExportContentProps {
   tool: Tool;
   toolHistory: ToolHistory;
@@ -52,10 +40,12 @@ export const PDFExportContent = React.forwardRef<HTMLDivElement, PDFExportConten
         case 'borrowing':
           if (eventDetails.borrower) details.push(`Borrower: ${eventDetails.borrower}`);
           if (eventDetails.project) details.push(`Project: ${eventDetails.project}`);
+          if (eventDetails.dueDate) details.push(`Due: ${moment(eventDetails.dueDate).format('MMM DD, YYYY')}`);
           break;
         case 'return':
           if (eventDetails.returnCondition) details.push(`Condition: ${eventDetails.returnCondition}`);
           if (eventDetails.project) details.push(`Project: ${eventDetails.project}`);
+          if (eventDetails.dueDate) details.push(`Due: ${moment(eventDetails.dueDate).format('MMM DD, YYYY')}`);
           if (eventDetails.overdueBy && eventDetails.overdueBy > 0) {
             details.push(`Overdue by: ${eventDetails.overdueBy} days`);
           }
@@ -72,6 +62,7 @@ export const PDFExportContent = React.forwardRef<HTMLDivElement, PDFExportConten
         case 'billing':
           if (eventDetails.billingAmount) details.push(`Amount: ${formatCurrency(eventDetails.billingAmount)}`);
           if (eventDetails.project) details.push(`Project: ${eventDetails.project}`);
+          if (eventDetails.dueDate) details.push(`Due: ${moment(eventDetails.dueDate).format('MMM DD, YYYY')}`);
           break;
         case 'eol':
           if (eventDetails.eolReason) details.push(`Reason: ${eventDetails.eolReason}`);
@@ -100,19 +91,25 @@ export const PDFExportContent = React.forwardRef<HTMLDivElement, PDFExportConten
               <strong>Name:</strong> {tool.name}
             </div>
             <div>
-              <strong>Model:</strong> {tool.model}
+              <strong>Tool Number:</strong> {tool.toolNumber}
             </div>
             <div>
-              <strong>Serial Number:</strong> {tool.serialNumber}
-            </div>
-            <div>
-              <strong>Category:</strong> {tool.category}
+              <strong>Procurement Date:</strong> {moment(tool.procurementDate).format('MMM DD, YYYY')}
             </div>
             <div>
               <strong>Procurement Price:</strong> {formatCurrency(tool.procurementPrice)}
             </div>
             <div>
+              <strong>Total Borrows:</strong> {tool.totalBorrowCount}
+            </div>
+            <div>
+              <strong>Total Repairs:</strong> {tool.totalRepairCount}
+            </div>
+            <div>
               <strong>Current Status:</strong> {tool.currentStatus}
+            </div>
+            <div>
+              <strong>Last Updated:</strong> {moment(tool.modifiedDate).format('MMM DD, YYYY')}
             </div>
           </div>
         </div>

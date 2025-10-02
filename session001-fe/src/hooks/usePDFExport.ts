@@ -21,7 +21,7 @@ export const usePDFExport = ({
 
   const handlePrint = useReactToPrint({
     contentRef: printComponentRef,
-    documentTitle: `Tool_History_Report_${tool.name.replace(/\s+/g, '_')}_${tool.serialNumber}`,
+    documentTitle: `Tool_History_Report_${tool.name.replace(/\s+/g, '_')}_${tool.toolNumber}`,
   });
 
   const exportToPDF = () => {

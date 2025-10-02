@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using Session001.DTOs;
 using Session001.Services.Interfaces;
 
@@ -15,6 +16,21 @@ namespace Session001.API.Controllers
         {
             _toolService = toolService;
             _logger = logger;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ToolDto>>> GetTools([FromQuery] string? search = null)
+        {
+            try
+            {
+                var tools = await _toolService.GetToolsAsync(search);
+                return Ok(tools);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving tools list with search term {Search}", search);
+                return StatusCode(500, "An error occurred while retrieving the tools.");
+            }
         }
 
         [HttpGet("{id}/history")]
